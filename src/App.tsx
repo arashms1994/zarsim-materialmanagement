@@ -1,7 +1,7 @@
 import "./App.css";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import theme from "./theme/theme.ts";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Stack } from "@mui/material";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
@@ -15,7 +15,7 @@ const cacheRtl = createCache({
 
 function App() {
   return (
-    <div className="flex justify-center items-center max-w-6xl">
+    <Stack direction="column" justifyContent="center" alignItems="center" width="700px" margin="auto">
       <QueryProvider>
         <CacheProvider value={cacheRtl}>
           <ThemeProvider theme={theme}>
@@ -24,7 +24,7 @@ function App() {
           </ThemeProvider>
         </CacheProvider>
       </QueryProvider>
-    </div>
+    </Stack>
   );
 }
 
