@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+button {
+  margin: 0px;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
