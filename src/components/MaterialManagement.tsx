@@ -5,6 +5,8 @@ import { Stack } from "@mui/material";
 import { useState } from "react";
 import { tabProps } from "../lib/tabProps";
 import { CustomTabPanel } from "./ui/CustomTabPanel";
+import ExitForm from "./exit-form/ExitForm";
+import EnterForm from "./enter-form/EnterForm";
 
 export default function MaterialManagement() {
   const [value, setValue] = useState(0);
@@ -24,8 +26,6 @@ export default function MaterialManagement() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-          indicatorColor="secondary"
-          textColor="secondary"
         >
           <Tab label="خروج مواد از انبار" {...tabProps(0)} />
           <Tab label="ورود مواد به انبار شارژ" {...tabProps(1)} />
@@ -33,10 +33,53 @@ export default function MaterialManagement() {
       </Stack>
 
       <CustomTabPanel value={value} index={0}>
-        heeeelllooooooooooo
+        <Stack
+          direction="column"
+          gap={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor="#1976D2"
+            width="fit-content"
+            paddingBlock={1}
+            paddingInline={3}
+            borderRadius={4}
+          >
+            <span className="text-xl font-medium text-white">
+              فرم ثبت خروج مواد از انبار شارژ یا انبار پای خط
+            </span>
+          </Stack>
+          <ExitForm />
+        </Stack>
       </CustomTabPanel>
+
       <CustomTabPanel value={value} index={1}>
-        heeeelllooooooooooo
+        <Stack
+          direction="column"
+          gap={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor="#1976D2"
+            width="fit-content"
+            paddingBlock={1}
+            paddingInline={3}
+            borderRadius={4}
+          >
+            <span className="text-xl font-medium text-white">
+              فرم ثبت ورود مواد به انبار شارژ
+            </span>
+          </Stack>
+          <EnterForm />
+        </Stack>
       </CustomTabPanel>
     </Box>
   );
