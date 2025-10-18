@@ -26,6 +26,8 @@ export default function MaterialManagement() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          textColor="secondary"
+          indicatorColor="secondary"
         >
           <Tab label="خروج مواد از انبار" {...tabProps(0)} />
           <Tab label="ورود مواد به انبار شارژ" {...tabProps(1)} />
@@ -43,7 +45,7 @@ export default function MaterialManagement() {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            bgcolor="#1976D2"
+            bgcolor="#0ead69"
             width="fit-content"
             paddingBlock={1}
             paddingInline={3}
@@ -68,7 +70,7 @@ export default function MaterialManagement() {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            bgcolor="#1976D2"
+            bgcolor="#0ead69"
             width="fit-content"
             paddingBlock={1}
             paddingInline={3}

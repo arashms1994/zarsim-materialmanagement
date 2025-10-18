@@ -282,7 +282,7 @@ export default function ExitForm() {
         className={`cursor-pointer text-center rounded-lg px-6 py-2 mt-4 transition-all duration-300 select-none ${
           loading
             ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-blue-500 hover:bg-blue-700 text-white"
+            : "bg-[#0ead69] hover:bg-green-800 text-white"
         }`}
       >
         {loading ? "در حال ارسال..." : "ثبت اطلاعات"}
