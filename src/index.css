@@ -3,6 +3,7 @@
 
 button {
   margin: 0px;
+  min-width: 0px
 }
 
 @custom-variant dark (&:is(.dark *));
