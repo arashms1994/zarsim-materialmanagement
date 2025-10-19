@@ -5,8 +5,8 @@ import { CssBaseline, Stack } from "@mui/material";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
-import QueryProvider from "./providers/QueryPrivider.tsx";
 import MaterialManagement from "./components/MaterialManagement.tsx";
+import AppProvider from "./providers/AppProvider.tsx";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -15,15 +15,21 @@ const cacheRtl = createCache({
 
 function App() {
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center" width="700px" margin="auto">
-      <QueryProvider>
+    <Stack
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      width="700px"
+      margin="auto"
+    >
+      <AppProvider>
         <CacheProvider value={cacheRtl}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <MaterialManagement />
           </ThemeProvider>
         </CacheProvider>
-      </QueryProvider>
+      </AppProvider>
     </Stack>
   );
 }

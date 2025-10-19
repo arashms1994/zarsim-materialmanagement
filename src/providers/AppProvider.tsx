@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import QueryProvider from "./QueryPrivider";
+import QueryProvider from "./QueryProvider";
 
-export default function AppProviders({ children }: PropsWithChildren) {
+export default function AppProvider({ children }: PropsWithChildren) {
   return <QueryProvider>{children}</QueryProvider>;
 }
