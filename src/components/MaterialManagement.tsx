@@ -5,7 +5,7 @@ import { Stack } from "@mui/material";
 import { useState } from "react";
 import { tabProps } from "../lib/tabProps";
 import { CustomTabPanel } from "./ui/CustomTabPanel";
-import ExitForm from "./exit-form/ExitForm";
+import ExitForm from "./exit-form/ProductionExitForm";
 import EnterForm from "./enter-form/EnterForm";
 
 export default function MaterialManagement() {
@@ -29,8 +29,9 @@ export default function MaterialManagement() {
           textColor="secondary"
           indicatorColor="secondary"
         >
-          <Tab label="خروج مواد از انبار" {...tabProps(0)} />
-          <Tab label="ورود مواد به انبار شارژ" {...tabProps(1)} />
+          <Tab label="خروج مواد از انبار پای خط" {...tabProps(0)} />
+          <Tab label="خروج مواد از انبار شارژ" {...tabProps(1)} />
+          <Tab label="ورود مواد به انبار شارژ" {...tabProps(2)} />
         </Tabs>
       </Stack>
 
@@ -52,7 +53,7 @@ export default function MaterialManagement() {
             borderRadius={4}
           >
             <span className="text-xl font-medium text-white">
-              فرم ثبت خروج مواد از انبار شارژ یا انبار پای خط
+              فرم ثبت خروج مواد از انبار پای خط
             </span>
           </Stack>
           <ExitForm />
@@ -60,6 +61,31 @@ export default function MaterialManagement() {
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
+        <Stack
+          direction="column"
+          gap={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor="#0ead69"
+            width="fit-content"
+            paddingBlock={1}
+            paddingInline={3}
+            borderRadius={4}
+          >
+            <span className="text-xl font-medium text-white">
+              فرم ثبت خروج مواد از انبار شارژ
+            </span>
+          </Stack>
+          <ExitForm />
+        </Stack>
+      </CustomTabPanel>
+
+      <CustomTabPanel value={value} index={2}>
         <Stack
           direction="column"
           gap={2}
