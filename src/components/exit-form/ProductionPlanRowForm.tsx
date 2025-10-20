@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Select from "react-select";
 import { Input } from "../ui/input";
 import { useForm, Controller } from "react-hook-form";
@@ -11,8 +10,8 @@ const options = [
   { value: "333", label: "333" },
 ];
 
-export default function ShargeExitForm() {
-  const { handleSubmit, control } = useForm<IExitFormProps>({
+export default function ProductionPlanRowForm() {
+  const { control } = useForm<IExitFormProps>({
     defaultValues: {
       productionPlanNumber: "",
       materialCategories: "",
@@ -28,30 +27,11 @@ export default function ShargeExitForm() {
     },
   });
 
-  const [loading, setLoading] = useState(false);
-
-  const onSubmit = async (data: IExitFormProps) => {
-    try {
-      setLoading(true);
-      console.log("Form Data:", data);
-
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      alert("اطلاعات با موفقیت ثبت شد ✅");
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 p-4 bg-white rounded-lg justify-center items-center"
-    >
-      <div className="flex items-center justify-start gap-2">
+    <div className="w-full p-5 gap-2 flex justify-between items-center flex-wrap rounded-[4px] border-2 shadow border-[#cccccc]">
+      <div className="flex items-center justify-center gap-2 w-full">
         <label htmlFor="productionPlanNumber" className="min-w-[150px]">
-          شماره برنامه:
+          ردیف کارت برنامه را انتخاب کنید:
         </label>
         <Controller
           name="productionPlanNumber"
@@ -243,17 +223,6 @@ export default function ShargeExitForm() {
           )}
         />
       </div>
-
-      <div
-        onClick={!loading ? handleSubmit(onSubmit) : undefined}
-        className={`cursor-pointer text-center rounded-lg px-6 py-2 mt-4 transition-all duration-300 select-none ${
-          loading
-            ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-[#0ead69] hover:bg-green-800 text-white"
-        }`}
-      >
-        {loading ? "در حال ارسال..." : "ثبت اطلاعات"}
-      </div>
-    </form>
+    </div>
   );
 }

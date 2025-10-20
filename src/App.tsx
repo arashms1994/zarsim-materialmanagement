@@ -19,7 +19,7 @@ function App() {
       direction="column"
       justifyContent="center"
       alignItems="center"
-      width="700px"
+      width="1100px"
       margin="auto"
     >
       <AppProvider>

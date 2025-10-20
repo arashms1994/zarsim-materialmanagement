@@ -1,12 +1,13 @@
-import Tabs from "@mui/material/Tabs";
+import { useState } from "react";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
 import { Stack } from "@mui/material";
-import { useState } from "react";
 import { tabProps } from "../lib/tabProps";
-import { CustomTabPanel } from "./ui/CustomTabPanel";
-import ExitForm from "./exit-form/ProductionExitForm";
 import EnterForm from "./enter-form/EnterForm";
+import { CustomTabPanel } from "./ui/CustomTabPanel";
+import ShargeExitForm from "./exit-form/ShargeExitForm";
+import ProductionExitForm from "./exit-form/ProductionExitForm";
 
 export default function MaterialManagement() {
   const [value, setValue] = useState(0);
@@ -23,7 +24,6 @@ export default function MaterialManagement() {
         sx={{ borderBottom: 1, borderColor: "divider" }}
       >
         <Tabs
-          centered
           value={value}
           onChange={handleChange}
           textColor="secondary"
@@ -57,7 +57,7 @@ export default function MaterialManagement() {
               فرم ثبت خروج مواد از انبار پای خط
             </span>
           </Stack>
-          <ExitForm />
+          <ProductionExitForm />
         </Stack>
       </CustomTabPanel>
 
@@ -82,7 +82,7 @@ export default function MaterialManagement() {
               فرم ثبت خروج مواد از انبار شارژ
             </span>
           </Stack>
-          <ExitForm />
+          <ShargeExitForm />
         </Stack>
       </CustomTabPanel>
 

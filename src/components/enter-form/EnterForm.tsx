@@ -1,22 +1,9 @@
-import { useForm, Controller } from "react-hook-form";
+import { useState } from "react";
 import Select from "react-select";
 import { Input } from "../ui/input";
+import { useForm, Controller } from "react-hook-form";
 import PersianDatePicker from "../ui/PersianDatePicker";
-import { useState } from "react";
-
-interface IFormInput {
-  firstName: string;
-  productionPlanNumber: string;
-  materialCategories: string;
-  materialName: string;
-  supplier: string;
-  selectedMachine: string;
-  materialPacking: string;
-  materialWeight: string;
-  materialPackingCount: string;
-  responsible: string;
-  materialEnterDate: string;
-}
+import type { IEnterFormInput } from "../../types/type";
 
 const options = [
   { value: "111", label: "111" },
@@ -25,7 +12,7 @@ const options = [
 ];
 
 export default function EnterForm() {
-  const { handleSubmit, control } = useForm<IFormInput>({
+  const { handleSubmit, control } = useForm<IEnterFormInput>({
     defaultValues: {
       materialCategories: "",
       materialName: "",
@@ -40,7 +27,7 @@ export default function EnterForm() {
 
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data: IFormInput) => {
+  const onSubmit = async (data: IEnterFormInput) => {
     try {
       setLoading(true);
       console.log("Form Data:", data);
