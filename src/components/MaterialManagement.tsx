@@ -23,6 +23,7 @@ export default function MaterialManagement() {
         sx={{ borderBottom: 1, borderColor: "divider" }}
       >
         <Tabs
+          centered
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
