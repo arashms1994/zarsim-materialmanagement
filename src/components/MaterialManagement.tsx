@@ -26,9 +26,9 @@ export default function MaterialManagement() {
           centered
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
           textColor="secondary"
           indicatorColor="secondary"
+          aria-label="material management tabs"
         >
           <Tab label="خروج مواد از انبار پای خط" {...tabProps(0)} />
           <Tab label="خروج مواد از انبار شارژ" {...tabProps(1)} />
