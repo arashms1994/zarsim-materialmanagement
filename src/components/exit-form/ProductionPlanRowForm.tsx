@@ -1,8 +1,9 @@
 import Select from "react-select";
 import { Input } from "../ui/input";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, type Control } from "react-hook-form";
 import type { IExitFormProps } from "../../types/type";
 import PersianDatePicker from "../ui/PersianDatePicker";
+import { Trash2 } from "lucide-react";
 
 const options = [
   { value: "111", label: "111" },
@@ -10,27 +11,23 @@ const options = [
   { value: "333", label: "333" },
 ];
 
-export default function ProductionPlanRowForm() {
-  const { control } = useForm<IExitFormProps>({
-    defaultValues: {
-      productionPlanNumber: "",
-      materialCategories: "",
-      materialName: "",
-      supplier: "",
-      selectedMachine: "",
-      materialPacking: "",
-      materialWeight: "",
-      materialPackingCount: "",
-      responsible: "",
-      materialExitDate: "",
-      isCharge: false,
-    },
-  });
+interface ProductionPlanRowFormProps {
+  control: Control<IExitFormProps>;
+  index?: number;
+  onDelete?: () => void;
+  showDeleteButton?: boolean;
+}
 
+export default function ProductionPlanRowForm({
+  control,
+  index = 0,
+  onDelete,
+  showDeleteButton = false,
+}: ProductionPlanRowFormProps) {
   return (
     <div className="w-full p-5 gap-2 flex justify-between items-center flex-wrap rounded-[4px] border-2 shadow border-[#cccccc]">
-      <div className="flex items-center justify-center gap-2 w-full">
-        <label htmlFor="productionPlanNumber" className="min-w-[150px]">
+      <div className="flex items-center justify-center gap-3 w-full py-3 relative">
+        <label htmlFor={`productionPlanRow-${index}`} className="min-w-[150px]">
           ردیف کارت برنامه را انتخاب کنید:
         </label>
         <Controller
@@ -41,13 +38,21 @@ export default function ProductionPlanRowForm() {
               {...field}
               options={options}
               isSearchable
-              placeholder="انتخاب شماره برنامه..."
+              placeholder="انتخاب ردیف کارت برنامه..."
               className="w-[250px]"
               onChange={(opt) => field.onChange(opt ? opt.value : "")}
               value={options.find((opt) => opt.value === field.value)}
             />
           )}
         />
+        {showDeleteButton && onDelete && (
+          <div
+            onClick={onDelete}
+            className="bg-red-500 absolute top-0 left-0 text-white text-sm cursor-pointer text-center rounded-lg px-6 py-2 mt-3 hover:bg-red-700 transition-all duration-300 select-none"
+          >
+            <Trash2 color="white" />
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-start gap-2">

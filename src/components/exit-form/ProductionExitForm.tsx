@@ -11,7 +11,7 @@ const options = [
 ];
 
 export default function ProductionExitForm() {
-  const { handleSubmit, control } = useForm<IExitFormProps>({
+  const { handleSubmit, control, watch } = useForm<IExitFormProps>({
     defaultValues: {
       productionPlanNumber: "",
       materialCategories: "",
@@ -28,6 +28,19 @@ export default function ProductionExitForm() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [productionRows, setProductionRows] = useState([0]); // Array of row indices
+
+  const selectedPlanNumber = watch("productionPlanNumber");
+
+  const addProductionRow = () => {
+    setProductionRows((prev) => [...prev, Math.max(...prev) + 1]);
+  };
+
+  const deleteProductionRow = (indexToDelete: number) => {
+    setProductionRows((prev) =>
+      prev.filter((_, index) => index !== indexToDelete)
+    );
+  };
 
   const onSubmit = async (data: IExitFormProps) => {
     try {
@@ -43,33 +56,56 @@ export default function ProductionExitForm() {
       setLoading(false);
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-5 p-4 bg-white rounded-lg justify-center items-center"
     >
-      <div className="flex items-center justify-start gap-2">
-        <label htmlFor="productionPlanNumber" className="min-w-[150px]">
-          شماره برنامه را انتخاب کنید:
-        </label>
-        <Controller
-          name="productionPlanNumber"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب شماره برنامه..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
-            />
-          )}
-        />
+      <div className="w-full flex items-center justify-center relative">
+        <div className="flex items-center justify-start gap-3">
+          <label htmlFor="productionPlanNumber" className="min-w-[150px]">
+            شماره برنامه را انتخاب کنید:
+          </label>
+          <Controller
+            name="productionPlanNumber"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={options}
+                isSearchable
+                placeholder="انتخاب شماره برنامه..."
+                className="w-[250px]"
+                onChange={(opt) => field.onChange(opt ? opt.value : "")}
+                value={options.find((opt) => opt.value === field.value)}
+              />
+            )}
+          />
+        </div>
+        {selectedPlanNumber && (
+          <div
+            onClick={addProductionRow}
+            className="bg-[#0ead69] absolute top-0 left-0 text-white text-sm cursor-pointer text-center rounded-lg px-6 py-2 hover:bg-green-800 transition-all duration-300 select-none"
+          >
+            افزودن ردیف از کارت تولید +
+          </div>
+        )}
       </div>
 
-      <ProductionPlanRowForm />
+      {selectedPlanNumber && (
+        <div className="w-full space-y-4">
+          {productionRows.map((rowIndex, index) => (
+            <ProductionPlanRowForm
+              key={rowIndex}
+              control={control}
+              index={rowIndex}
+              onDelete={() => deleteProductionRow(index)}
+              showDeleteButton={productionRows.length > 1}
+            />
+          ))}
+        </div>
+      )}
 
       <div
         onClick={!loading ? handleSubmit(onSubmit) : undefined}
