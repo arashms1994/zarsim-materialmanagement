@@ -18,7 +18,7 @@ const PersianDatePicker: React.FC<IPersianDatePickerProps> = ({
     : null;
 
   return (
-    <div className="w-[250px] min-h-[36px] rounded-sm border border-[#cccccc] flex items-center justify-between pl-2">
+    <div className="w-[250px] min-h-[36px] rounded-[4px] border border-[#cccccc] flex items-center justify-between pl-2">
       <DatePicker
         value={dateObject}
         calendar={persian}
