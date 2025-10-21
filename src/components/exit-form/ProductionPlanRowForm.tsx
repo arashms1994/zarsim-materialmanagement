@@ -9,54 +9,58 @@ export default function ProductionPlanRowForm({
   control,
 }: IProductionPlanRowFormProps) {
   return (
-    <div className="w-full p-5 gap-2 flex justify-between items-center flex-wrap rounded-[4px] border-2 shadow border-[#cccccc]">
-      <div className="bg-[#0ead69] right-0 justify-center items-centert flex w-fit px-3 py-2 rounded-lg">
-        <span>جزئیات ردیف {index + 1}</span>
+    <div className="w-full p-5 gap-2 flex justify-between items-center flex-wrap rounded-[4px] border-2 shadow border-[#0ead69]">
+      <div className="w-full">
+        <div className="bg-[#0ead69] right-0 text-center w-fit px-3 py-2 rounded-lg">
+        <span className="text-lg font-normal text-white">
+          جزئیات ردیف {index + 1}
+        </span>
+      </div>
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="materialCategories" className="min-w-[150px]">
           دسته‌بندی مواد:
         </label>
         <span className="text-lg font-normal">{planItem.dastemavadi}</span>
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="materialName" className="min-w-[150px]">
           نام مواد:
         </label>
         <span className="text-lg font-normal">{planItem.rizmavad}</span>
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="supplier" className="min-w-[150px]">
           تأمین‌کننده:
         </label>
         <span className="text-lg font-normal">{planItem.tamin}</span>
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="selectedMachine" className="min-w-[150px]">
           خروج جهت دستگاه:
         </label>
         <span className="text-lg font-normal">{planItem.dastghah}</span>
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="selectedMachine" className="min-w-[150px]">
           تاریخ درخواست:
         </label>
         <span className="text-lg font-normal">{planItem.time}</span>
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="selectedMachine" className="min-w-[150px]">
           مرحله:
         </label>
         <span className="text-lg font-normal">{planItem.marhaleha}</span>
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="materialEnter" className="min-w-[150px]">
           تاریخ خروج مواد:
         </label>
@@ -72,7 +76,7 @@ export default function ProductionPlanRowForm({
         />
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="responsible" className="min-w-[150px]">
           شخص تحویل‌گیرنده:
         </label>
@@ -89,7 +93,7 @@ export default function ProductionPlanRowForm({
         />
       </div>
 
-      <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2 w-[450px] border border-[#0ead69] rounded-lg py-2 px-3">
         <label htmlFor="materialWeight" className="min-w-[150px]">
           وزن مواد (کیلوگرم):
         </label>
