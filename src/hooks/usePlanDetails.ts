@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getDarkhastMavadList } from "../api/getData";
 
-export const usePlanDetails = (selectedPlanNumber: string) => {
+export const usePlanDetails = (planItem: string) => {
   const {
     data: allItems = [],
     isLoading,
@@ -13,7 +13,7 @@ export const usePlanDetails = (selectedPlanNumber: string) => {
   });
 
   const planDetails =
-    allItems?.filter((item) => item.shpmarebarname === selectedPlanNumber) ||
+    allItems?.filter((item) => item.shpmarebarname === planItem) ||
     [];
 
   return {

@@ -1,4 +1,3 @@
-import type { Control } from "react-hook-form";
 import type DateObject from "react-date-object";
 
 export interface ITabPanelProps {
@@ -13,7 +12,6 @@ export interface IPersianDatePickerProps {
 }
 
 export interface IProductionPlanRowFormProps {
-  control: Control<IExitFormProps>;
   index?: number;
   onDelete?: () => void;
   showDeleteButton?: boolean;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
 import type { IExitFormProps } from "../../types/type";
@@ -7,56 +6,26 @@ import { useSearchPlans } from "../../hooks/useSearchPlans";
 import { usePlanDetails } from "../../hooks/usePlanDetails";
 
 export default function ShargeExitForm() {
-  const { handleSubmit, control, watch } = useForm<IExitFormProps>({
-    defaultValues: {
-      productionPlanNumber: "",
-      materialCategories: "",
-      materialName: "",
-      supplier: "",
-      selectedMachine: "",
-      materialPacking: "",
-      materialWeight: "",
-      materialPackingCount: "",
-      responsible: "",
-      materialExitDate: "",
-      isCharge: false,
-    },
-  });
+  const { control, watch } = useForm<IExitFormProps>();
+  const selectedPlan = watch("productionPlanNumber");
 
-  const [loading, setLoading] = useState(false);
   const {
     searchResults,
     isLoading: searchLoading,
     handleSearch,
   } = useSearchPlans();
 
-  const selectedPlanNumber = watch("productionPlanNumber");
-  const { planDetails } = usePlanDetails(selectedPlanNumber);
+  const { planDetails, isLoading: planLoading } = usePlanDetails(
+    selectedPlan || ""
+  );
 
   const planOptions = searchResults.map((plan) => ({
     value: plan,
     label: plan,
   }));
 
-  const onSubmit = async (data: IExitFormProps) => {
-    try {
-      setLoading(true);
-      console.log("Form Data:", data);
-
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      alert("اطلاعات با موفقیت ثبت شد ✅");
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 p-4 bg-white rounded-lg justify-center items-center"
-    >
+    <div className="space-y-4">
       <div className="w-full flex items-center justify-center relative">
         <div className="flex items-center justify-start gap-3">
           <label htmlFor="productionPlanNumber" className="min-w-[150px]">
@@ -84,25 +53,36 @@ export default function ShargeExitForm() {
         </div>
       </div>
 
-      {planDetails.map((planItem, index) => (
-        <ProductionPlanRowForm
-          key={index}
-          index={index}
-          planItem={planItem}
-          control={control}
-        />
-      ))}
-
-      <div
-        onClick={!loading ? handleSubmit(onSubmit) : undefined}
-        className={`cursor-pointer text-center rounded-lg px-6 py-2 mt-4 transition-all duration-300 select-none ${
-          loading
-            ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-[#0ead69] hover:bg-green-800 text-white"
-        }`}
-      >
-        {loading ? "در حال ارسال..." : "ثبت اطلاعات"}
-      </div>
-    </form>
+      {selectedPlan && (
+        <div className="space-y-4">
+          {planLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="flex items-center gap-3 bg-transparent border border-[#0ead69] rounded-lg px-6 py-4">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#0ead69]"></div>
+                <span className="text-[#0ead69] font-medium">
+                  در حال بارگذاری جزئیات برنامه {selectedPlan}
+                </span>
+              </div>
+            </div>
+          ) : planDetails.length > 0 ? (
+            planDetails.map((planItem, index) => (
+              <ProductionPlanRowForm
+                key={index}
+                index={index}
+                planItem={planItem}
+              />
+            ))
+          ) : (
+            <div className="flex items-center justify-center py-8">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg px-6 py-4">
+                <span className="text-yellow-700 font-medium">
+                  هیچ ردیفی برای برنامه {selectedPlan} یافت نشد
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
