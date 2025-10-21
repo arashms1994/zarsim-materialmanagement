@@ -56,7 +56,7 @@ export async function searchDarkhastMavadPlans(
   if (!term || term.trim().length < 2) return [];
 
   const encodedTerm = encodeURIComponent(term.trim());
-  const url = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items?$select=Id,shpmarebarname&$top=50&$filter=substringof('${encodedTerm}',shpmarebarname)`;
+  const url = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items?$select=Id,shpmarebarname&$filter=substringof('${encodedTerm}',shpmarebarname)`;
 
   const res = await fetch(url, {
     headers: {
