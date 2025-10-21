@@ -1,196 +1,72 @@
-import Select from "react-select";
 import { Input } from "../ui/input";
-import { Controller, type Control } from "react-hook-form";
-import type { IExitFormProps } from "../../types/type";
+import { Controller } from "react-hook-form";
 import PersianDatePicker from "../ui/PersianDatePicker";
-import { Trash2 } from "lucide-react";
-
-const options = [
-  { value: "111", label: "111" },
-  { value: "222", label: "222" },
-  { value: "333", label: "333" },
-];
-
-interface ProductionPlanRowFormProps {
-  control: Control<IExitFormProps>;
-  index?: number;
-  onDelete?: () => void;
-  showDeleteButton?: boolean;
-}
+import type { IProductionPlanRowFormProps } from "../../types/type";
 
 export default function ProductionPlanRowForm({
-  control,
   index = 0,
-  onDelete,
-  showDeleteButton = false,
-}: ProductionPlanRowFormProps) {
+  planItem,
+  control,
+}: IProductionPlanRowFormProps) {
   return (
     <div className="w-full p-5 gap-2 flex justify-between items-center flex-wrap rounded-[4px] border-2 shadow border-[#cccccc]">
-      <div className="flex items-center justify-center gap-3 w-full py-3 relative">
-        <label htmlFor={`productionPlanRow-${index}`} className="min-w-[150px]">
-          ردیف کارت برنامه را انتخاب کنید:
-        </label>
-        <Controller
-          name="productionPlanNumber"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب ردیف کارت برنامه..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
-            />
-          )}
-        />
-        {showDeleteButton && onDelete && (
-          <div
-            onClick={onDelete}
-            className="bg-red-500 absolute top-0 left-0 text-white text-sm cursor-pointer text-center rounded-lg px-6 py-2 mt-3 hover:bg-red-700 transition-all duration-300 select-none"
-          >
-            <Trash2 color="white" />
-          </div>
-        )}
+      <div className="bg-[#0ead69] right-0 justify-center items-centert flex w-fit px-3 py-2 rounded-lg">
+        <span>جزئیات ردیف {index + 1}</span>
       </div>
 
       <div className="flex items-center justify-start gap-2">
         <label htmlFor="materialCategories" className="min-w-[150px]">
           دسته‌بندی مواد:
         </label>
-        <Controller
-          name="materialCategories"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب دسته‌بندی مواد..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
-            />
-          )}
-        />
+        <span className="text-lg font-normal">{planItem.dastemavadi}</span>
       </div>
 
       <div className="flex items-center justify-start gap-2">
         <label htmlFor="materialName" className="min-w-[150px]">
           نام مواد:
         </label>
-        <Controller
-          name="materialName"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب نام مواد..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
-            />
-          )}
-        />
-      </div>
-
-      <div className="flex items-center justify-start gap-2">
-        <label htmlFor="materialPacking" className="min-w-[150px]">
-          نوع بسته‌بندی مواد:
-        </label>
-        <Controller
-          name="materialPacking"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب نوع بسته‌بندی..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
-            />
-          )}
-        />
-      </div>
-
-      <div className="flex items-center justify-start gap-2">
-        <label htmlFor="materialWeight" className="min-w-[150px]">
-          وزن مواد (کیلوگرم):
-        </label>
-        <Controller
-          name="materialWeight"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="string"
-              placeholder="مثلاً 50"
-              className="w-[250px]"
-            />
-          )}
-        />
-      </div>
-
-      <div className="flex items-center justify-start gap-2">
-        <label htmlFor="materialPackingCount" className="min-w-[150px]">
-          مقدار بسته‌بندی:
-        </label>
-        <Controller
-          name="materialPackingCount"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="string"
-              placeholder="مثلاً 3 بسته"
-              className="w-[250px]"
-            />
-          )}
-        />
+        <span className="text-lg font-normal">{planItem.rizmavad}</span>
       </div>
 
       <div className="flex items-center justify-start gap-2">
         <label htmlFor="supplier" className="min-w-[150px]">
           تأمین‌کننده:
         </label>
-        <Controller
-          name="supplier"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب تأمین‌کننده..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
-            />
-          )}
-        />
+        <span className="text-lg font-normal">{planItem.tamin}</span>
       </div>
 
       <div className="flex items-center justify-start gap-2">
         <label htmlFor="selectedMachine" className="min-w-[150px]">
           خروج جهت دستگاه:
         </label>
+        <span className="text-lg font-normal">{planItem.dastghah}</span>
+      </div>
+
+      <div className="flex items-center justify-start gap-2">
+        <label htmlFor="selectedMachine" className="min-w-[150px]">
+          تاریخ درخواست:
+        </label>
+        <span className="text-lg font-normal">{planItem.time}</span>
+      </div>
+
+      <div className="flex items-center justify-start gap-2">
+        <label htmlFor="selectedMachine" className="min-w-[150px]">
+          مرحله:
+        </label>
+        <span className="text-lg font-normal">{planItem.marhaleha}</span>
+      </div>
+
+      <div className="flex items-center justify-start gap-2">
+        <label htmlFor="materialEnter" className="min-w-[150px]">
+          تاریخ خروج مواد:
+        </label>
         <Controller
-          name="selectedMachine"
+          name="materialExitDate"
           control={control}
           render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب دستگاه..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
+            <PersianDatePicker
+              value={field.value}
+              onChange={(date) => field.onChange(date)}
             />
           )}
         />
@@ -214,16 +90,18 @@ export default function ProductionPlanRowForm({
       </div>
 
       <div className="flex items-center justify-start gap-2">
-        <label htmlFor="materialEnter" className="min-w-[150px]">
-          تاریخ خروج مواد:
+        <label htmlFor="materialWeight" className="min-w-[150px]">
+          وزن مواد (کیلوگرم):
         </label>
         <Controller
-          name="materialExitDate"
+          name="materialWeight"
           control={control}
           render={({ field }) => (
-            <PersianDatePicker
-              value={field.value}
-              onChange={(date) => field.onChange(date)}
+            <Input
+              {...field}
+              type="string"
+              placeholder="مثلاً 50"
+              className="w-[250px]"
             />
           )}
         />

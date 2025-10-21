@@ -3,12 +3,8 @@ import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
 import type { IExitFormProps } from "../../types/type";
 import ProductionPlanRowForm from "./ProductionPlanRowForm";
-
-const options = [
-  { value: "111", label: "111" },
-  { value: "222", label: "222" },
-  { value: "333", label: "333" },
-];
+import { useSearchPlans } from "../../hooks/useSearchPlans";
+import { usePlanDetails } from "../../hooks/usePlanDetails";
 
 export default function ProductionExitForm() {
   const { handleSubmit, control, watch } = useForm<IExitFormProps>({
@@ -28,19 +24,19 @@ export default function ProductionExitForm() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [productionRows, setProductionRows] = useState([0]); // Array of row indices
+  const {
+    searchResults,
+    isLoading: searchLoading,
+    handleSearch,
+  } = useSearchPlans();
 
   const selectedPlanNumber = watch("productionPlanNumber");
+  const { planDetails } = usePlanDetails(selectedPlanNumber);
 
-  const addProductionRow = () => {
-    setProductionRows((prev) => [...prev, Math.max(...prev) + 1]);
-  };
-
-  const deleteProductionRow = (indexToDelete: number) => {
-    setProductionRows((prev) =>
-      prev.filter((_, index) => index !== indexToDelete)
-    );
-  };
+  const planOptions = searchResults.map((plan) => ({
+    value: plan,
+    label: plan,
+  }));
 
   const onSubmit = async (data: IExitFormProps) => {
     try {
@@ -65,7 +61,7 @@ export default function ProductionExitForm() {
       <div className="w-full flex items-center justify-center relative">
         <div className="flex items-center justify-start gap-3">
           <label htmlFor="productionPlanNumber" className="min-w-[150px]">
-            شماره برنامه را انتخاب کنید:
+            شماره برنامه را وارد کنید:
           </label>
           <Controller
             name="productionPlanNumber"
@@ -73,39 +69,30 @@ export default function ProductionExitForm() {
             render={({ field }) => (
               <Select
                 {...field}
-                options={options}
+                options={planOptions}
                 isSearchable
-                placeholder="انتخاب شماره برنامه..."
+                isLoading={searchLoading}
+                placeholder="جستجو شماره برنامه..."
                 className="w-[250px]"
+                onInputChange={handleSearch}
                 onChange={(opt) => field.onChange(opt ? opt.value : "")}
-                value={options.find((opt) => opt.value === field.value)}
+                value={planOptions.find((opt) => opt.value === field.value)}
+                noOptionsMessage={() => "شماره برنامه‌ای یافت نشد"}
+                loadingMessage={() => "در حال جستجو..."}
               />
             )}
           />
         </div>
-        {selectedPlanNumber && (
-          <div
-            onClick={addProductionRow}
-            className="bg-[#0ead69] absolute top-0 left-0 text-white text-sm cursor-pointer text-center rounded-lg px-6 py-2 hover:bg-green-800 transition-all duration-300 select-none"
-          >
-            افزودن ردیف از کارت تولید +
-          </div>
-        )}
       </div>
 
-      {selectedPlanNumber && (
-        <div className="w-full space-y-4">
-          {productionRows.map((rowIndex, index) => (
-            <ProductionPlanRowForm
-              key={rowIndex}
-              control={control}
-              index={rowIndex}
-              onDelete={() => deleteProductionRow(index)}
-              showDeleteButton={productionRows.length > 1}
-            />
-          ))}
-        </div>
-      )}
+      {planDetails.map((planItem, index) => (
+        <ProductionPlanRowForm
+          key={index}
+          index={index}
+          planItem={planItem}
+          control={control}
+        />
+      ))}
 
       <div
         onClick={!loading ? handleSubmit(onSubmit) : undefined}
