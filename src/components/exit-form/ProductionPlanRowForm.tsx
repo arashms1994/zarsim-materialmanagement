@@ -88,6 +88,15 @@ export default function ProductionPlanRowForm({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+            <label className="min-w-[150px] font-medium">
+              موجودی(کیلوگرم):
+            </label>
+            <span className="text-lg font-normal">
+              {planItem.meghdardarkhast}
+            </span>
+          </div>
+
           <div className="flex items-center justify-start gap-2">
             <label className="min-w-[150px] font-medium">
               تاریخ خروج مواد:
@@ -97,23 +106,6 @@ export default function ProductionPlanRowForm({
               control={control}
               render={({ field }) => (
                 <Input {...field} className="w-[250px]" readOnly />
-              )}
-            />
-          </div>
-
-          <div className="flex items-center justify-start gap-2">
-            <label className="min-w-[150px] font-medium">
-              شخص تحویل‌گیرنده:
-            </label>
-            <Controller
-              name="responsible"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  placeholder="نام کامل تحویل‌گیرنده..."
-                  className="w-[250px]"
-                />
               )}
             />
           </div>
@@ -130,6 +122,23 @@ export default function ProductionPlanRowForm({
                   {...field}
                   type="string"
                   placeholder="مثلاً 50"
+                  className="w-[250px]"
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex items-center justify-start gap-2">
+            <label className="min-w-[150px] font-medium">
+              شخص تحویل‌گیرنده:
+            </label>
+            <Controller
+              name="responsible"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder="نام کامل تحویل‌گیرنده..."
                   className="w-[250px]"
                 />
               )}
