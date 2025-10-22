@@ -1,13 +1,15 @@
-import Select from "react-select";
+import { useState } from "react";
+import { Input } from "../ui/input";
 import { Controller, useForm } from "react-hook-form";
+import type { IExitFormProps } from "../../types/type";
 import ProductionPlanRowForm from "./ProductionPlanRowForm";
 import { useSearchPlans } from "../../hooks/useSearchPlans";
 import { usePlanDetails } from "../../hooks/usePlanDetails";
-import type { IExitFormProps } from "../../types/type";
 
 export default function ProductionExitForm() {
-  const { control, watch } = useForm<IExitFormProps>();
+  const { control, watch, setValue } = useForm<IExitFormProps>();
   const selectedPlan = watch("productionPlanNumber");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const {
     searchResults,
@@ -19,11 +21,6 @@ export default function ProductionExitForm() {
     selectedPlan || ""
   );
 
-  const planOptions = searchResults.map((plan) => ({
-    value: plan,
-    label: plan,
-  }));
-
   return (
     <div className="space-y-4">
       <div className="w-full flex items-center justify-center relative">
@@ -31,25 +28,60 @@ export default function ProductionExitForm() {
           <label htmlFor="productionPlanNumber" className="min-w-[150px]">
             شماره برنامه را وارد کنید:
           </label>
-          <Controller
-            name="productionPlanNumber"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={planOptions}
-                isSearchable
-                isLoading={searchLoading}
-                placeholder="جستجو شماره برنامه..."
-                className="w-[250px]"
-                onInputChange={handleSearch}
-                onChange={(opt) => field.onChange(opt ? opt.value : "")}
-                value={planOptions.find((opt) => opt.value === field.value)}
-                noOptionsMessage={() => "شماره برنامه‌ای یافت نشد"}
-                loadingMessage={() => "در حال جستجو..."}
-              />
+          <div className="relative">
+            <Controller
+              name="productionPlanNumber"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder="شماره برنامه را وارد کنید..."
+                  className="w-[250px]"
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    handleSearch(e.target.value);
+                    setShowSuggestions(e.target.value.length >= 2);
+                  }}
+                  onFocus={() => {
+                    if (field.value && field.value.length >= 2) {
+                      setShowSuggestions(true);
+                    }
+                  }}
+                  onBlur={() => {
+                    setTimeout(() => setShowSuggestions(false), 200);
+                  }}
+                />
+              )}
+            />
+
+            {showSuggestions && (
+              <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                {searchLoading ? (
+                  <div className="px-3 py-2 text-sm text-gray-500 flex items-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0ead69]"></div>
+                    در حال جستجو...
+                  </div>
+                ) : searchResults.length > 0 ? (
+                  searchResults.map((plan, index) => (
+                    <div
+                      key={index}
+                      className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                      onClick={() => {
+                        setValue("productionPlanNumber", plan);
+                        setShowSuggestions(false);
+                      }}
+                    >
+                      {plan}
+                    </div>
+                  ))
+                ) : (
+                  <div className="px-3 py-2 text-sm text-gray-500">
+                    شماره برنامه‌ای یافت نشد
+                  </div>
+                )}
+              </div>
             )}
-          />
+          </div>
         </div>
       </div>
 
