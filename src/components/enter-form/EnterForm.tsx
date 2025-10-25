@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { useForm, Controller } from "react-hook-form";
-import PersianDatePicker from "../ui/PersianDatePicker";
+import { getPersianDate } from "../../lib/getPersianDate";
+import { useSuppliers } from "../../hooks/useSuppliers";
 import type { IEnterFormInput } from "../../types/type";
 import { MATERIAL_CATEGORIES } from "../../lib/constants";
 
@@ -21,7 +22,7 @@ export default function EnterForm() {
       materialWeight: "",
       materialPackingCount: "",
       responsible: "",
-      materialEnterDate: "",
+      materialEnterDate: getPersianDate(),
     },
   });
 
@@ -30,7 +31,8 @@ export default function EnterForm() {
   const [showMaterialSuggestions, setShowMaterialSuggestions] = useState(false);
   const [showSupplierSuggestions, setShowSupplierSuggestions] = useState(false);
 
-  // Filter functions for suggestions
+  const { suppliers, isLoading: suppliersLoading } = useSuppliers();
+
   const filterCategories = (searchTerm: string) => {
     return MATERIAL_CATEGORIES.filter((category) =>
       category.value.toLowerCase().includes(searchTerm.toLowerCase())
@@ -40,6 +42,12 @@ export default function EnterForm() {
   const filterMaterials = (searchTerm: string) => {
     return options.filter((option) =>
       option.value.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  const filterSuppliers = (searchTerm: string) => {
+    return suppliers.filter((supplier) =>
+      supplier.Supplier.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
@@ -57,6 +65,7 @@ export default function EnterForm() {
       setLoading(false);
     }
   };
+  
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -70,10 +79,7 @@ export default function EnterForm() {
           name="materialEnterDate"
           control={control}
           render={({ field }) => (
-            <PersianDatePicker
-              value={field.value}
-              onChange={(date) => field.onChange(date)}
-            />
+            <Input {...field} className="w-[250px]" readOnly />
           )}
         />
       </div>
@@ -107,7 +113,6 @@ export default function EnterForm() {
             )}
           />
 
-          {/* Category Suggestions Dropdown */}
           {showCategorySuggestions && (
             <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
               {filterCategories(control._formValues.materialCategories || "")
@@ -165,7 +170,6 @@ export default function EnterForm() {
             )}
           />
 
-          {/* Material Suggestions Dropdown */}
           {showMaterialSuggestions && (
             <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
               {filterMaterials(control._formValues.materialName || "").length >
@@ -241,22 +245,26 @@ export default function EnterForm() {
             )}
           />
 
-          {/* Supplier Suggestions Dropdown */}
           {showSupplierSuggestions && (
             <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
-              {filterMaterials(control._formValues.supplier || "").length >
-              0 ? (
-                filterMaterials(control._formValues.supplier || "").map(
-                  (supplier, index) => (
+              {suppliersLoading ? (
+                <div className="px-3 py-2 text-sm text-gray-500 flex items-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0ead69]"></div>
+                  در حال بارگذاری...
+                </div>
+              ) : filterSuppliers(control._formValues.supplier || "").length >
+                0 ? (
+                filterSuppliers(control._formValues.supplier || "").map(
+                  (supplier) => (
                     <div
-                      key={index}
+                      key={supplier.ID}
                       className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
                       onClick={() => {
-                        setValue("supplier", supplier.value);
+                        setValue("supplier", supplier.Supplier);
                         setShowSupplierSuggestions(false);
                       }}
                     >
-                      {supplier.value}
+                      {supplier.Supplier}
                     </div>
                   )
                 )

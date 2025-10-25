@@ -1,5 +1,5 @@
 import { BASE_URL } from "./base";
-import type { IDarkhastMavadListItem } from "../types/type";
+import type { IDarkhastMavadListItem, ISupplierItem } from "../types/type";
 
 export async function getDarkhastMavadList(): Promise<
   IDarkhastMavadListItem[] | null
@@ -85,4 +85,50 @@ export async function searchDarkhastMavadPlans(
     }, []);
 
   return uniques;
+}
+
+export async function getSuppliers(): Promise<ISupplierItem[]> {
+  let items: ISupplierItem[] = [];
+
+  const listGuid = "C613B477-AD61-4C26-AD72-9222CD073A6D";
+  let nextUrl:
+    | string
+    | null = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items??$select=ID,Supplier`;
+
+  try {
+    while (nextUrl) {
+      const res = await fetch(nextUrl, {
+        headers: {
+          Accept: "application/json;odata=verbose",
+          "Content-Type": "application/json;odata=verbose",
+        },
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(
+          `خطا در گرفتن آیتم‌های DarkhastMavad: ${err} (Status: ${res.status})`
+        );
+      }
+
+      const json: {
+        d: { results: ISupplierItem[]; __next?: string };
+      } = await res.json();
+
+      const results = json.d?.results;
+      if (!Array.isArray(results)) {
+        throw new Error(
+          "ساختار داده‌ی برگشتی نامعتبر است: results یک آرایه نیست"
+        );
+      }
+
+      items = [...items, ...results];
+      nextUrl = json.d.__next ?? null;
+    }
+
+    return items;
+  } catch (err) {
+    console.error("خطا در دریافت آیتم‌های DarkhastMavad:", err);
+    throw err;
+  }
 }

@@ -96,3 +96,13 @@ export interface IDarkhastMavadListItem {
   tojihatkontroltolid: null;
   tozihat: null;
 }
+
+export interface ISupplierItem {
+  ID: number;
+  Supplier: string;
+}
+
+export interface IDevicesItem {
+  ID: number;
+  Title: string;
+}
