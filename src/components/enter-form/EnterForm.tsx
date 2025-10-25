@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { useForm, Controller } from "react-hook-form";
 import PersianDatePicker from "../ui/PersianDatePicker";
 import type { IEnterFormInput } from "../../types/type";
+import { MATERIAL_CATEGORIES } from "../../lib/constants";
 
 const options = [
   { value: "111", label: "111" },
@@ -56,12 +57,12 @@ export default function EnterForm() {
           render={({ field }) => (
             <Select
               {...field}
-              options={options}
+              options={MATERIAL_CATEGORIES}
               isSearchable
               placeholder="انتخاب دسته‌بندی مواد..."
               className="w-[250px]"
               onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
+              value={MATERIAL_CATEGORIES.find((opt) => opt.value === field.value)}
             />
           )}
         />

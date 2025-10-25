@@ -6,6 +6,11 @@ export interface ITabPanelProps {
   children?: React.ReactNode;
 }
 
+export interface IMaterialCategory {
+  id: number;
+  value: string;
+}
+
 export interface IPersianDatePickerProps {
   onChange: (date: string) => void;
   value: string | Date | DateObject | null;
