@@ -48,6 +48,22 @@ export default function EnterForm() {
       className="flex flex-col gap-5 p-4 bg-white rounded-lg justify-center items-center"
     >
       <div className="flex items-center justify-start gap-2">
+        <label htmlFor="materialEnter" className="min-w-[150px]">
+          تاریخ ورود مواد:
+        </label>
+        <Controller
+          name="materialEnterDate"
+          control={control}
+          render={({ field }) => (
+            <PersianDatePicker
+              value={field.value}
+              onChange={(date) => field.onChange(date)}
+            />
+          )}
+        />
+      </div>
+
+      <div className="flex items-center justify-start gap-2">
         <label htmlFor="materialCategories" className="min-w-[150px]">
           دسته‌بندی مواد:
         </label>
@@ -62,7 +78,9 @@ export default function EnterForm() {
               placeholder="انتخاب دسته‌بندی مواد..."
               className="w-[250px]"
               onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={MATERIAL_CATEGORIES.find((opt) => opt.value === field.value)}
+              value={MATERIAL_CATEGORIES.find(
+                (opt) => opt.value === field.value
+              )}
             />
           )}
         />
@@ -90,27 +108,6 @@ export default function EnterForm() {
       </div>
 
       <div className="flex items-center justify-start gap-2">
-        <label htmlFor="materialPacking" className="min-w-[150px]">
-          نوع بسته‌بندی مواد:
-        </label>
-        <Controller
-          name="materialPacking"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isSearchable
-              placeholder="انتخاب نوع بسته‌بندی..."
-              className="w-[250px]"
-              onChange={(opt) => field.onChange(opt ? opt.value : "")}
-              value={options.find((opt) => opt.value === field.value)}
-            />
-          )}
-        />
-      </div>
-
-      <div className="flex items-center justify-start gap-2">
         <label htmlFor="materialWeight" className="min-w-[150px]">
           وزن مواد (کیلوگرم):
         </label>
@@ -122,24 +119,6 @@ export default function EnterForm() {
               {...field}
               type="string"
               placeholder="مثلاً 50"
-              className="w-[250px]"
-            />
-          )}
-        />
-      </div>
-
-      <div className="flex items-center justify-start gap-2">
-        <label htmlFor="materialPackingCount" className="min-w-[150px]">
-          مقدار بسته‌بندی:
-        </label>
-        <Controller
-          name="materialPackingCount"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="string"
-              placeholder="مثلاً 3 بسته"
               className="w-[250px]"
             />
           )}
@@ -179,22 +158,6 @@ export default function EnterForm() {
               {...field}
               placeholder="نام کامل تحویل‌گیرنده..."
               className="w-[250px]"
-            />
-          )}
-        />
-      </div>
-
-      <div className="flex items-center justify-start gap-2">
-        <label htmlFor="materialEnter" className="min-w-[150px]">
-          تاریخ ورود مواد:
-        </label>
-        <Controller
-          name="materialEnterDate"
-          control={control}
-          render={({ field }) => (
-            <PersianDatePicker
-              value={field.value}
-              onChange={(date) => field.onChange(date)}
             />
           )}
         />
