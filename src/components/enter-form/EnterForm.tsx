@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { useForm, Controller } from "react-hook-form";
 import { getPersianDate } from "../../lib/getPersianDate";
-import { useSuppliers } from "../../hooks/useSuppliers";
+import { useSearchSuppliers } from "../../hooks/useSearchSuppliers";
 import type { IEnterFormInput } from "../../types/type";
 import { MATERIAL_CATEGORIES } from "../../lib/constants";
 
@@ -31,7 +31,11 @@ export default function EnterForm() {
   const [showMaterialSuggestions, setShowMaterialSuggestions] = useState(false);
   const [showSupplierSuggestions, setShowSupplierSuggestions] = useState(false);
 
-  const { suppliers, isLoading: suppliersLoading } = useSuppliers();
+  const {
+    searchResults: supplierResults,
+    isLoading: suppliersLoading,
+    handleSearch: handleSupplierSearch,
+  } = useSearchSuppliers();
 
   const filterCategories = (searchTerm: string) => {
     return MATERIAL_CATEGORIES.filter((category) =>
@@ -42,12 +46,6 @@ export default function EnterForm() {
   const filterMaterials = (searchTerm: string) => {
     return options.filter((option) =>
       option.value.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  };
-
-  const filterSuppliers = (searchTerm: string) => {
-    return suppliers.filter((supplier) =>
-      supplier.Supplier.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
 
@@ -65,7 +63,7 @@ export default function EnterForm() {
       setLoading(false);
     }
   };
-  
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -231,12 +229,11 @@ export default function EnterForm() {
                 className="w-[250px]"
                 onChange={(e) => {
                   field.onChange(e.target.value);
-                  setShowSupplierSuggestions(e.target.value.length >= 2);
+                  handleSupplierSearch(e.target.value);
+                  setShowSupplierSuggestions(true);
                 }}
                 onFocus={() => {
-                  if (field.value && field.value.length >= 2) {
-                    setShowSupplierSuggestions(true);
-                  }
+                  setShowSupplierSuggestions(true);
                 }}
                 onBlur={() => {
                   setTimeout(() => setShowSupplierSuggestions(false), 200);
@@ -252,22 +249,19 @@ export default function EnterForm() {
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0ead69]"></div>
                   در حال بارگذاری...
                 </div>
-              ) : filterSuppliers(control._formValues.supplier || "").length >
-                0 ? (
-                filterSuppliers(control._formValues.supplier || "").map(
-                  (supplier) => (
-                    <div
-                      key={supplier.ID}
-                      className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
-                      onClick={() => {
-                        setValue("supplier", supplier.Supplier);
-                        setShowSupplierSuggestions(false);
-                      }}
-                    >
-                      {supplier.Supplier}
-                    </div>
-                  )
-                )
+              ) : supplierResults.length > 0 ? (
+                supplierResults.map((supplier) => (
+                  <div
+                    key={supplier.ID}
+                    className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                    onClick={() => {
+                      setValue("supplier", supplier.Supplier);
+                      setShowSupplierSuggestions(false);
+                    }}
+                  >
+                    {supplier.Supplier}
+                  </div>
+                ))
               ) : (
                 <div className="px-3 py-2 text-sm text-gray-500">
                   تأمین‌کننده‌ای یافت نشد
