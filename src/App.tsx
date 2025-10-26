@@ -1,12 +1,13 @@
 import "./App.css";
-import { CacheProvider, ThemeProvider } from "@emotion/react";
+import { Toaster } from "sonner";
+import { prefixer } from "stylis";
 import theme from "./theme/theme.ts";
-import { CssBaseline, Stack } from "@mui/material";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
-import { prefixer } from "stylis";
-import MaterialManagement from "./components/MaterialManagement.tsx";
+import { CssBaseline, Stack } from "@mui/material";
 import AppProvider from "./providers/AppProvider.tsx";
+import { CacheProvider, ThemeProvider } from "@emotion/react";
+import MaterialManagement from "./components/MaterialManagement.tsx";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -27,6 +28,7 @@ function App() {
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <MaterialManagement />
+            <Toaster />
           </ThemeProvider>
         </CacheProvider>
       </AppProvider>
