@@ -5,6 +5,8 @@ export const config = {
     DARKHAST_MAVAD: import.meta.env.VITE_DARKHAST_MAVAD_LIST_GUID,
     SUPPLIERS: import.meta.env.VITE_SUPPLIERS_LIST_GUID,
     PERSONNEL: import.meta.env.VITE_PERSONNEL_LIST_GUID,
+    MATERIAL_PRODUCTION: import.meta.env.VITE_MATERIAL_PRODUCTION_LIST_GUID,
+    MATERIAL_CHARGE: import.meta.env.VITE_MATERIAL_CHARGE_LIST_GUID,
   },
 
   API_TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT),

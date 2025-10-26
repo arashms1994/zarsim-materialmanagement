@@ -51,6 +51,8 @@ VITE_BASE_URL=https://portal.zarsim.com
 VITE_DARKHAST_MAVAD_LIST_GUID=your-guid-here
 VITE_SUPPLIERS_LIST_GUID=your-guid-here
 VITE_PERSONNEL_LIST_GUID=your-guid-here
+VITE_MATERIAL_PRODUCTION_LIST_GUID=your-production-guid-here
+VITE_MATERIAL_CHARGE_LIST_GUID=your-charge-guid-here
 
 # API Configuration
 VITE_API_TIMEOUT=30000
@@ -107,6 +109,9 @@ src/
 - ✅ **جدید:** Debounce برای جستجوها (کاهش درخواست‌های API)
 - ✅ **جدید:** Skeleton Loading برای بهبود UX
 - ✅ **جدید:** انیمیشن‌های زیبا و نرم
+- ✅ **جدید:** Toast Notifications برای نمایش پیام‌ها
+- ✅ **جدید:** ارسال داده به SharePoint Lists
+- ✅ **جدید:** مدیریت خطا و موفقیت در فرم‌ها
 
 ## 🛠️ اسکریپت‌های موجود
 
