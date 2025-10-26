@@ -1,18 +1,18 @@
 import { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getSuppliers } from "../api/getData";
+import { getPersonnel } from "../api/getData";
 import { config } from "../api/config";
 
-export const useSearchSuppliers = () => {
+export const useSearchPersonnel = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const {
-    data: allSuppliers = [],
+    data: allPersonnel = [],
     isLoading: allLoading,
     error: allError,
   } = useQuery({
-    queryKey: ["all-suppliers"],
-    queryFn: getSuppliers,
+    queryKey: ["all-personnel"],
+    queryFn: getPersonnel,
     staleTime: config.CACHE_STALE_TIME,
   });
 
@@ -21,11 +21,11 @@ export const useSearchSuppliers = () => {
     isLoading: searchLoading,
     error: searchError,
   } = useQuery({
-    queryKey: ["search-suppliers", searchTerm],
+    queryKey: ["search-personnel", searchTerm],
     queryFn: () => {
-      if (!searchTerm || searchTerm.length < 1) return allSuppliers;
-      return allSuppliers.filter((supplier) =>
-        supplier.Supplier.toLowerCase().includes(searchTerm.toLowerCase())
+      if (!searchTerm || searchTerm.length < 1) return allPersonnel;
+      return allPersonnel.filter((personnel) =>
+        personnel.Title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     },
     enabled: true,

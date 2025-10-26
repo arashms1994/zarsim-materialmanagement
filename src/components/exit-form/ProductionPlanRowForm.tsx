@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Controller, useForm } from "react-hook-form";
 import { getPersianDate } from "../../lib/getPersianDate";
+import { useSearchPersonnel } from "../../hooks/useSearchPersonnel";
 import type {
   IExitFormProps,
   IProductionPlanRowFormProps,
@@ -11,7 +12,7 @@ export default function ProductionPlanRowForm({
   index = 0,
   planItem,
 }: IProductionPlanRowFormProps) {
-  const { control, handleSubmit } = useForm<IExitFormProps>({
+  const { control, handleSubmit, setValue } = useForm<IExitFormProps>({
     defaultValues: {
       productionPlanNumber: planItem.shpmarebarname,
       materialCategories: planItem.dastemavadi,
@@ -28,6 +29,14 @@ export default function ProductionPlanRowForm({
   });
 
   const [loading, setLoading] = useState(false);
+  const [showPersonnelSuggestions, setShowPersonnelSuggestions] =
+    useState(false);
+
+  const {
+    searchResults: personnelResults,
+    isLoading: personnelLoading,
+    handleSearch: handlePersonnelSearch,
+  } = useSearchPersonnel();
 
   const onSubmit = async (data: IExitFormProps) => {
     try {
@@ -132,17 +141,58 @@ export default function ProductionPlanRowForm({
             <label className="min-w-[150px] font-medium">
               شخص تحویل‌گیرنده:
             </label>
-            <Controller
-              name="responsible"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  placeholder="نام کامل تحویل‌گیرنده..."
-                  className="w-[250px]"
-                />
+            <div className="relative">
+              <Controller
+                name="responsible"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    placeholder="جستجو تحویل‌گیرنده..."
+                    className="w-[250px]"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handlePersonnelSearch(e.target.value);
+                      setShowPersonnelSuggestions(true);
+                    }}
+                    onFocus={() => {
+                      setShowPersonnelSuggestions(true);
+                    }}
+                    onBlur={() => {
+                      setTimeout(() => setShowPersonnelSuggestions(false), 200);
+                    }}
+                  />
+                )}
+              />
+
+              {showPersonnelSuggestions && (
+                <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                  {personnelLoading ? (
+                    <div className="px-3 py-2 text-sm text-gray-500 flex items-center gap-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0ead69]"></div>
+                      در حال بارگذاری...
+                    </div>
+                  ) : personnelResults.length > 0 ? (
+                    personnelResults.map((personnel) => (
+                      <div
+                        key={personnel.ID}
+                        className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        onClick={() => {
+                          setValue("responsible", personnel.Title);
+                          setShowPersonnelSuggestions(false);
+                        }}
+                      >
+                        {personnel.Title}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-3 py-2 text-sm text-gray-500">
+                      تحویل‌گیرنده‌ای یافت نشد
+                    </div>
+                  )}
+                </div>
               )}
-            />
+            </div>
           </div>
         </div>
 

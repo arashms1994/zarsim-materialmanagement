@@ -1,12 +1,17 @@
 import { BASE_URL } from "./base";
-import type { IDarkhastMavadListItem, ISupplierItem } from "../types/type";
+import { config } from "./config";
+import type {
+  IDarkhastMavadListItem,
+  ISupplierItem,
+  IPersonnelItem,
+} from "../types/type";
 
 export async function getDarkhastMavadList(): Promise<
   IDarkhastMavadListItem[] | null
 > {
   let items: IDarkhastMavadListItem[] = [];
 
-  const listGuid = "BECA87A8-2DEC-4929-8E64-2BF675FC081E";
+  const listGuid = config.LIST_GUIDS.DARKHAST_MAVAD;
   let nextUrl:
     | string
     | null = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items?$orderby=ID desc`;
@@ -52,7 +57,7 @@ export async function getDarkhastMavadList(): Promise<
 export async function searchDarkhastMavadPlans(
   term: string
 ): Promise<string[]> {
-  const listGuid = "BECA87A8-2DEC-4929-8E64-2BF675FC081E";
+  const listGuid = config.LIST_GUIDS.DARKHAST_MAVAD;
   if (!term || term.trim().length < 2) return [];
 
   const encodedTerm = encodeURIComponent(term.trim());
@@ -90,7 +95,7 @@ export async function searchDarkhastMavadPlans(
 export async function getSuppliers(): Promise<ISupplierItem[]> {
   let items: ISupplierItem[] = [];
 
-  const listGuid = "C613B477-AD61-4C26-AD72-9222CD073A6D";
+  const listGuid = config.LIST_GUIDS.SUPPLIERS;
   let nextUrl:
     | string
     | null = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items??$select=ID,Supplier`;
@@ -129,6 +134,52 @@ export async function getSuppliers(): Promise<ISupplierItem[]> {
     return items;
   } catch (err) {
     console.error("خطا در دریافت آیتم‌های DarkhastMavad:", err);
+    throw err;
+  }
+}
+
+export async function getPersonnel(): Promise<IPersonnelItem[]> {
+  let items: IPersonnelItem[] = [];
+
+  const listGuid = config.LIST_GUIDS.PERSONNEL;
+  let nextUrl:
+    | string
+    | null = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items?$select=ID,Title`;
+
+  try {
+    while (nextUrl) {
+      const res = await fetch(nextUrl, {
+        headers: {
+          Accept: "application/json;odata=verbose",
+          "Content-Type": "application/json;odata=verbose",
+        },
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(
+          `خطا در گرفتن لیست پرسنل: ${err} (Status: ${res.status})`
+        );
+      }
+
+      const json: {
+        d: { results: IPersonnelItem[]; __next?: string };
+      } = await res.json();
+
+      const results = json.d?.results;
+      if (!Array.isArray(results)) {
+        throw new Error(
+          "ساختار داده‌ی برگشتی نامعتبر است: results یک آرایه نیست"
+        );
+      }
+
+      items = [...items, ...results];
+      nextUrl = json.d.__next ?? null;
+    }
+
+    return items;
+  } catch (err) {
+    console.error("خطا در دریافت لیست پرسنل:", err);
     throw err;
   }
 }

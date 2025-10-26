@@ -106,3 +106,8 @@ export interface IDevicesItem {
   ID: number;
   Title: string;
 }
+
+export interface IPersonnelItem {
+  ID: number;
+  Title: string;
+}

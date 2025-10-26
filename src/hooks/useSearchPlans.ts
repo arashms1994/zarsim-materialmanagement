@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchDarkhastMavadPlans } from "../api/getData";
+import { config } from "../api/config";
 
 export const useSearchPlans = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +14,7 @@ export const useSearchPlans = () => {
     queryKey: ["search-plans", searchTerm],
     queryFn: () => searchDarkhastMavadPlans(searchTerm),
     enabled: searchTerm.length >= 2,
-    staleTime: 5 * 60 * 1000,
+    staleTime: config.CACHE_STALE_TIME,
   });
 
   const handleSearch = useCallback((term: string) => {
