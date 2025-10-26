@@ -1,10 +1,22 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getSuppliers } from "../api/getData";
 import { config } from "../api/config";
+import { useDebounce } from "./useDebounce";
 
 export const useSearchSuppliers = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  // Debounce the search term
+  const debouncedSetSearchTerm = useDebounce((term: string) => {
+    setDebouncedSearchTerm(term);
+  }, config.DEBOUNCE_DELAY);
+
+  // Update debounced search term when searchTerm changes
+  useEffect(() => {
+    debouncedSetSearchTerm(searchTerm);
+  }, [searchTerm, debouncedSetSearchTerm]);
 
   const {
     data: allSuppliers = [],
@@ -21,11 +33,14 @@ export const useSearchSuppliers = () => {
     isLoading: searchLoading,
     error: searchError,
   } = useQuery({
-    queryKey: ["search-suppliers", searchTerm],
+    queryKey: ["search-suppliers", debouncedSearchTerm],
     queryFn: () => {
-      if (!searchTerm || searchTerm.length < 1) return allSuppliers;
+      if (!debouncedSearchTerm || debouncedSearchTerm.length < 1)
+        return allSuppliers;
       return allSuppliers.filter((supplier) =>
-        supplier.Supplier.toLowerCase().includes(searchTerm.toLowerCase())
+        supplier.Supplier.toLowerCase().includes(
+          debouncedSearchTerm.toLowerCase()
+        )
       );
     },
     enabled: true,

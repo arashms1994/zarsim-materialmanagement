@@ -1,33 +1,22 @@
-// Configuration file for environment variables
-// این فایل متغیرهای محیطی را مدیریت می‌کند
-
 export const config = {
-  // Base URL for SharePoint API
-  BASE_URL: import.meta.env.VITE_BASE_URL || "https://portal.zarsim.com",
+  BASE_URL: import.meta.env.VITE_BASE_URL,
 
-  // SharePoint List GUIDs
   LIST_GUIDS: {
-    DARKHAST_MAVAD:
-      import.meta.env.VITE_DARKHAST_MAVAD_LIST_GUID ||
-      "BECA87A8-2DEC-4929-8E64-2BF675FC081E",
-    SUPPLIERS:
-      import.meta.env.VITE_SUPPLIERS_LIST_GUID ||
-      "C613B477-AD61-4C26-AD72-9222CD073A6D",
-    PERSONNEL:
-      import.meta.env.VITE_PERSONNEL_LIST_GUID ||
-      "47DD699E-D73C-4D3D-82D3-FB30F84C29D7",
+    DARKHAST_MAVAD: import.meta.env.VITE_DARKHAST_MAVAD_LIST_GUID,
+    SUPPLIERS: import.meta.env.VITE_SUPPLIERS_LIST_GUID,
+    PERSONNEL: import.meta.env.VITE_PERSONNEL_LIST_GUID,
   },
 
-  // API Configuration
-  API_TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT || "30000"),
-  CACHE_STALE_TIME: parseInt(import.meta.env.VITE_CACHE_STALE_TIME || "300000"),
+  API_TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT),
+  CACHE_STALE_TIME: parseInt(import.meta.env.VITE_CACHE_STALE_TIME),
 
-  // Application Settings
-  APP_NAME: import.meta.env.VITE_APP_NAME || "Zarsim Material Management",
-  VERSION: import.meta.env.VITE_VERSION || "1.0.0",
+  APP_NAME: import.meta.env.VITE_APP_NAME,
+  VERSION: import.meta.env.VITE_VERSION,
+
+  DEBOUNCE_DELAY: parseInt(import.meta.env.VITE_DEBOUNCE_DELAY),
+  SKELETON_ANIMATION_DURATION: parseInt(import.meta.env.VITE_SKELETON_DURATION),
 } as const;
 
-// Validation function to check if required environment variables are set
 export const validateConfig = () => {
   const requiredVars = [
     "VITE_BASE_URL",
@@ -50,5 +39,4 @@ export const validateConfig = () => {
   return missingVars.length === 0;
 };
 
-// Call validation on import
 validateConfig();

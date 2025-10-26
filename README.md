@@ -56,6 +56,10 @@ VITE_PERSONNEL_LIST_GUID=your-guid-here
 VITE_API_TIMEOUT=30000
 VITE_CACHE_STALE_TIME=300000
 
+# UI Configuration
+VITE_DEBOUNCE_DELAY=300
+VITE_SKELETON_DURATION=1500
+
 # Application Settings
 VITE_APP_NAME=Zarsim Material Management
 VITE_VERSION=1.0.0
@@ -100,6 +104,9 @@ src/
 - ✅ پشتیبانی کامل از زبان فارسی و تقویم شمسی
 - ✅ مدیریت cache و بهینه‌سازی عملکرد
 - ✅ استفاده از متغیرهای محیطی برای امنیت
+- ✅ **جدید:** Debounce برای جستجوها (کاهش درخواست‌های API)
+- ✅ **جدید:** Skeleton Loading برای بهبود UX
+- ✅ **جدید:** انیمیشن‌های زیبا و نرم
 
 ## 🛠️ اسکریپت‌های موجود
 

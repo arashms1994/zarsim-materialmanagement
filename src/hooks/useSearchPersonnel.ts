@@ -1,10 +1,20 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPersonnel } from "../api/getData";
 import { config } from "../api/config";
+import { useDebounce } from "./useDebounce";
 
 export const useSearchPersonnel = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  const debouncedSetSearchTerm = useDebounce((term: string) => {
+    setDebouncedSearchTerm(term);
+  }, config.DEBOUNCE_DELAY);
+
+  useEffect(() => {
+    debouncedSetSearchTerm(searchTerm);
+  }, [searchTerm, debouncedSetSearchTerm]);
 
   const {
     data: allPersonnel = [],
@@ -21,11 +31,14 @@ export const useSearchPersonnel = () => {
     isLoading: searchLoading,
     error: searchError,
   } = useQuery({
-    queryKey: ["search-personnel", searchTerm],
+    queryKey: ["search-personnel", debouncedSearchTerm],
     queryFn: () => {
-      if (!searchTerm || searchTerm.length < 1) return allPersonnel;
+      if (!debouncedSearchTerm || debouncedSearchTerm.length < 1)
+        return allPersonnel;
       return allPersonnel.filter((personnel) =>
-        personnel.Title.toLowerCase().includes(searchTerm.toLowerCase())
+        personnel.Title.toLowerCase().includes(
+          debouncedSearchTerm.toLowerCase()
+        )
       );
     },
     enabled: true,

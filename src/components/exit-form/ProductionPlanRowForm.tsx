@@ -7,6 +7,7 @@ import type {
   IExitFormProps,
   IProductionPlanRowFormProps,
 } from "../../types/type";
+import { SkeletonSearchSuggestion } from "../ui/Skeleton";
 
 export default function ProductionPlanRowForm({
   index = 0,
@@ -168,10 +169,7 @@ export default function ProductionPlanRowForm({
               {showPersonnelSuggestions && (
                 <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
                   {personnelLoading ? (
-                    <div className="px-3 py-2 text-sm text-gray-500 flex items-center gap-2">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0ead69]"></div>
-                      در حال بارگذاری...
-                    </div>
+                    <SkeletonSearchSuggestion count={3} />
                   ) : personnelResults.length > 0 ? (
                     personnelResults.map((personnel) => (
                       <div
