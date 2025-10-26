@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
+import { toast } from "react-toastify";
 import { Controller, useForm } from "react-hook-form";
+import { SkeletonSearchSuggestion } from "../ui/Skeleton";
 import { getPersianDate } from "../../lib/getPersianDate";
+import { submitMaterialProductionEntry } from "../../api/addData";
 import { useSearchPersonnel } from "../../hooks/useSearchPersonnel";
 import type {
   IExitFormProps,
   IProductionPlanRowFormProps,
 } from "../../types/type";
-import { SkeletonSearchSuggestion } from "../ui/Skeleton";
 
 export default function ProductionPlanRowForm({
   index = 0,
   planItem,
+  onSubmit: customOnSubmit,
 }: IProductionPlanRowFormProps) {
   const { control, handleSubmit, setValue } = useForm<IExitFormProps>({
     defaultValues: {
@@ -20,12 +23,9 @@ export default function ProductionPlanRowForm({
       materialName: planItem.rizmavad,
       supplier: planItem.tamin,
       selectedMachine: planItem.dastghah,
-      materialPacking: "",
       materialWeight: "",
-      materialPackingCount: "",
       responsible: "",
       materialExitDate: getPersianDate(),
-      isCharge: false,
     },
   });
 
@@ -42,13 +42,21 @@ export default function ProductionPlanRowForm({
   const onSubmit = async (data: IExitFormProps) => {
     try {
       setLoading(true);
-      console.log("Form Data:", data);
 
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const submitFunction = customOnSubmit || submitMaterialProductionEntry;
+      const result = await submitFunction(data, planItem, index);
 
-      alert("اطلاعات با موفقیت ثبت شد ✅");
+      if (result.success) {
+        toast.success(result.message);
+        setValue("responsible", "");
+        setValue("materialWeight", "");
+        setValue("materialExitDate", getPersianDate());
+      } else {
+        toast.error(result.message);
+      }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.");
     } finally {
       setLoading(false);
     }
@@ -203,7 +211,7 @@ export default function ProductionPlanRowForm({
                 : "bg-[#0ead69] hover:bg-green-800 text-white cursor-pointer"
             }`}
           >
-            {loading ? "در حال ارسال..." : "ثبت اطلاعات خروج"}
+            {loading ? "در حال ارسال..." : `ثبت ردیف ${index + 1}`}
           </div>
         </div>
       </form>

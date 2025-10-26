@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Controller, useForm } from "react-hook-form";
-import type { IExitFormProps } from "../../types/type";
 import ProductionPlanRowForm from "./ProductionPlanRowForm";
 import { useSearchPlans } from "../../hooks/useSearchPlans";
 import { usePlanDetails } from "../../hooks/usePlanDetails";
+import { submitMaterialProductionEntry } from "../../api/addData";
+import type { IExitFormProps, IDarkhastMavadListItem } from "../../types/type";
 
 export default function ProductionExitForm() {
   const { control, watch, setValue } = useForm<IExitFormProps>();
@@ -20,6 +21,14 @@ export default function ProductionExitForm() {
   const { planDetails, isLoading: planLoading } = usePlanDetails(
     selectedPlan || ""
   );
+
+  const handleProductionSubmit = async (
+    data: IExitFormProps,
+    planItem: IDarkhastMavadListItem,
+    index: number
+  ) => {
+    return await submitMaterialProductionEntry(data, planItem, index);
+  };
 
   return (
     <div className="space-y-4">
@@ -102,6 +111,7 @@ export default function ProductionExitForm() {
                 key={index}
                 index={index}
                 planItem={planItem}
+                onSubmit={handleProductionSubmit}
               />
             ))
           ) : (

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { toast } from "sonner";
 import { Input } from "../ui/input";
+import { toast } from "react-toastify";
 import { useForm, Controller } from "react-hook-form";
 import type { IEnterFormInput } from "../../types/type";
 import { SkeletonSearchSuggestion } from "../ui/Skeleton";
@@ -62,7 +62,6 @@ export default function EnterForm() {
   const onSubmit = async (data: IEnterFormInput) => {
     try {
       setLoading(true);
-      console.log("Form Data:", data);
 
       const result = await submitMaterialChargeEntry(data);
 

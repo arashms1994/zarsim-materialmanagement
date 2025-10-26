@@ -21,6 +21,11 @@ export interface IProductionPlanRowFormProps {
   onDelete?: () => void;
   showDeleteButton?: boolean;
   planItem: IDarkhastMavadListItem;
+  onSubmit?: (
+    data: IExitFormProps,
+    planItem: IDarkhastMavadListItem,
+    index: number
+  ) => Promise<{ success: boolean; message: string }>;
 }
 
 export interface IExitFormProps {

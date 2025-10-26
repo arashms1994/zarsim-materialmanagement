@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { useForm, Controller } from "react-hook-form";
-import type { IExitFormProps } from "../../types/type";
 import ProductionPlanRowForm from "./ProductionPlanRowForm";
 import { useSearchPlans } from "../../hooks/useSearchPlans";
 import { usePlanDetails } from "../../hooks/usePlanDetails";
+import { submitMaterialChargeExitEntry } from "../../api/addData";
+import type { IExitFormProps, IDarkhastMavadListItem } from "../../types/type";
 
 export default function ShargeExitForm() {
   const { control, watch, setValue } = useForm<IExitFormProps>();
@@ -20,6 +21,14 @@ export default function ShargeExitForm() {
   const { planDetails, isLoading: planLoading } = usePlanDetails(
     selectedPlan || ""
   );
+
+  const handleShargeSubmit = async (
+    data: IExitFormProps,
+    planItem: IDarkhastMavadListItem,
+    index: number
+  ) => {
+    return await submitMaterialChargeExitEntry(data, planItem, index);
+  };
 
   return (
     <div className="space-y-4">
@@ -102,6 +111,7 @@ export default function ShargeExitForm() {
                 key={index}
                 index={index}
                 planItem={planItem}
+                onSubmit={handleShargeSubmit}
               />
             ))
           ) : (
