@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Input } from "../ui/input";
 import { useForm, Controller } from "react-hook-form";
-import { getPersianDate } from "../../lib/getPersianDate";
-import { useSearchSuppliers } from "../../hooks/useSearchSuppliers";
-import { useSearchPersonnel } from "../../hooks/useSearchPersonnel";
 import type { IEnterFormInput } from "../../types/type";
-import { MATERIAL_CATEGORIES } from "../../lib/constants";
 import { SkeletonSearchSuggestion } from "../ui/Skeleton";
+import { getPersianDate } from "../../lib/getPersianDate";
+import { MATERIAL_CATEGORIES } from "../../lib/constants";
+import { submitMaterialChargeEntry } from "../../api/addData";
+import { useSearchPersonnel } from "../../hooks/useSearchPersonnel";
+import { useSearchSuppliers } from "../../hooks/useSearchSuppliers";
 
 const options = [
   { value: "111", label: "111" },
@@ -20,9 +22,7 @@ export default function EnterForm() {
       materialCategories: "",
       materialName: "",
       supplier: "",
-      materialPacking: "",
       materialWeight: "",
-      materialPackingCount: "",
       responsible: "",
       materialEnterDate: getPersianDate(),
     },
@@ -64,11 +64,22 @@ export default function EnterForm() {
       setLoading(true);
       console.log("Form Data:", data);
 
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const result = await submitMaterialChargeEntry(data);
 
-      alert("اطلاعات با موفقیت ثبت شد ✅");
+      if (result.success) {
+        toast.success(result.message);
+        setValue("materialCategories", "");
+        setValue("materialName", "");
+        setValue("supplier", "");
+        setValue("materialWeight", "");
+        setValue("responsible", "");
+        setValue("materialEnterDate", getPersianDate());
+      } else {
+        toast.error(result.message);
+      }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.");
     } finally {
       setLoading(false);
     }

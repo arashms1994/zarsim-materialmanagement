@@ -45,9 +45,7 @@ export interface IEnterFormInput {
   materialName: string;
   supplier: string;
   selectedMachine: string;
-  materialPacking: string;
   materialWeight: string;
-  materialPackingCount: string;
   responsible: string;
   materialEnterDate: string;
 }
@@ -110,4 +108,36 @@ export interface IDevicesItem {
 export interface IPersonnelItem {
   ID: number;
   Title: string;
+}
+
+export interface IMaterialProductionListItem {
+  Title: string;
+  Material_Category: string;
+  Material_Name: string;
+  Material_Supplier: string;
+  Request_Date: string;
+  Date: string;
+  Amount: string;
+  Inventory: string;
+  Device: string;
+  Phase: string;
+  Request_Row: string;
+  Responsible: string;
+}
+
+export interface IMaterialChargeListItem {
+  Title: string;
+  Enterance_Date: string;
+  Exit_Date: string;
+  Inventory: string;
+  Exit_Amount: string;
+  Device: string;
+  Request_Row: string;
+  Phase: string;
+  Material_Category: string;
+  Material_Name: string;
+  Material_Supplier: string;
+  Request_Date: string;
+  Enter_Responsible: string;
+  Exit_Responsible: string;
 }
