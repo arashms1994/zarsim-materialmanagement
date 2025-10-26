@@ -1,9 +1,9 @@
 import "./App.css";
-import { Toaster } from "sonner";
 import { prefixer } from "stylis";
 import theme from "./theme/theme.ts";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
+import { Bounce, ToastContainer } from "react-toastify";
 import { CssBaseline, Stack } from "@mui/material";
 import AppProvider from "./providers/AppProvider.tsx";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
@@ -28,7 +28,19 @@ function App() {
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <MaterialManagement />
-            <Toaster />
+            <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+              transition={Bounce}
+            />
           </ThemeProvider>
         </CacheProvider>
       </AppProvider>
