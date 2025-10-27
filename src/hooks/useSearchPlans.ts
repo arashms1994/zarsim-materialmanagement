@@ -8,12 +8,10 @@ export const useSearchPlans = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-  // Debounce the search term
   const debouncedSetSearchTerm = useDebounce((term: string) => {
     setDebouncedSearchTerm(term);
   }, config.DEBOUNCE_DELAY);
 
-  // Update debounced search term when searchTerm changes
   useEffect(() => {
     if (searchTerm.length >= 2) {
       debouncedSetSearchTerm(searchTerm);

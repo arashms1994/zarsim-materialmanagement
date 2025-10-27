@@ -8,12 +8,10 @@ export const useSearchSuppliers = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-  // Debounce the search term
   const debouncedSetSearchTerm = useDebounce((term: string) => {
     setDebouncedSearchTerm(term);
   }, config.DEBOUNCE_DELAY);
 
-  // Update debounced search term when searchTerm changes
   useEffect(() => {
     debouncedSetSearchTerm(searchTerm);
   }, [searchTerm, debouncedSetSearchTerm]);
