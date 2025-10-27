@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { Controller, useForm } from "react-hook-form";
 import { SkeletonSearchSuggestion } from "../ui/Skeleton";
 import { getPersianDate } from "../../lib/getPersianDate";
-import { submitMaterialProductionEntry } from "../../api/addData";
 import { useSearchPersonnel } from "../../hooks/useSearchPersonnel";
 import type {
   IExitFormProps,
@@ -43,8 +42,12 @@ export default function ProductionPlanRowForm({
     try {
       setLoading(true);
 
-      const submitFunction = customOnSubmit || submitMaterialProductionEntry;
-      const result = await submitFunction(data, planItem, index);
+      if (!customOnSubmit) {
+        toast.error("تابع ارسال تعریف نشده است");
+        return;
+      }
+
+      const result = await customOnSubmit(data, planItem, index);
 
       if (result.success) {
         toast.success(result.message);

@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import ProductionPlanRowForm from "./ProductionPlanRowForm";
 import { useSearchPlans } from "../../hooks/useSearchPlans";
 import { usePlanDetails } from "../../hooks/usePlanDetails";
-import { submitMaterialProductionEntry } from "../../api/addData";
+import { submitMaterialProductionExit } from "../../api/addData";
 import type { IExitFormProps, IDarkhastMavadListItem } from "../../types/type";
 
 export default function ProductionExitForm() {
@@ -27,7 +27,7 @@ export default function ProductionExitForm() {
     planItem: IDarkhastMavadListItem,
     index: number
   ) => {
-    return await submitMaterialProductionEntry(data, planItem, index);
+    return await submitMaterialProductionExit(data, planItem, index);
   };
 
   return (

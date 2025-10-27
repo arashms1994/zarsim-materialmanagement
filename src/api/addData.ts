@@ -63,7 +63,7 @@ export async function submitMaterialChargeEntry(
   }
 }
 
-export async function submitMaterialChargeExitEntry(
+export async function submitMaterialChargeExit(
   formData: IExitFormProps,
   planItem: IDarkhastMavadListItem,
   index: number
@@ -128,7 +128,7 @@ export async function submitMaterialChargeExitEntry(
   }
 }
 
-export async function submitMaterialProductionEntry(
+export async function submitMaterialProductionExit(
   formData: IExitFormProps,
   planItem: IDarkhastMavadListItem,
   index: number
