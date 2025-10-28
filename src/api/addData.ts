@@ -1,10 +1,10 @@
-import { BASE_URL } from "./base";
 import { config } from "./config";
 import type {
   IEnterFormInput,
   IExitFormProps,
   IDarkhastMavadListItem,
 } from "../types/type";
+import { BASE_URL } from "./base";
 
 export async function submitMaterialChargeEntry(
   formData: IEnterFormInput

@@ -30,9 +30,10 @@ export default function MaterialManagement() {
           indicatorColor="secondary"
           aria-label="material management tabs"
         >
-          <Tab label="خروج مواد از انبار پای خط" {...tabProps(0)} />
-          <Tab label="خروج مواد از انبار شارژ" {...tabProps(1)} />
+          <Tab label="ورود مواد به انبار پای خط" {...tabProps(0)} />
+          <Tab label="خروج مواد از انبار پای خط" {...tabProps(1)} />
           <Tab label="ورود مواد به انبار شارژ" {...tabProps(2)} />
+          <Tab label="خروج مواد از انبار شارژ" {...tabProps(3)} />
         </Tabs>
       </Stack>
 
@@ -54,10 +55,10 @@ export default function MaterialManagement() {
             borderRadius={4}
           >
             <span className="text-xl font-medium text-white">
-              فرم ثبت خروج مواد از انبار پای خط
+              فرم ثبت ورود مواد به انبار پای خط
             </span>
           </Stack>
-          <ProductionExitForm />
+          سلام
         </Stack>
       </CustomTabPanel>
 
@@ -79,10 +80,10 @@ export default function MaterialManagement() {
             borderRadius={4}
           >
             <span className="text-xl font-medium text-white">
-              فرم ثبت خروج مواد از انبار شارژ
+              فرم ثبت خروج مواد از انبار پای خط
             </span>
           </Stack>
-          <ShargeExitForm />
+          <ProductionExitForm />
         </Stack>
       </CustomTabPanel>
 
@@ -108,6 +109,31 @@ export default function MaterialManagement() {
             </span>
           </Stack>
           <EnterForm />
+        </Stack>
+      </CustomTabPanel>
+
+      <CustomTabPanel value={value} index={3}>
+        <Stack
+          direction="column"
+          gap={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor="#0ead69"
+            width="fit-content"
+            paddingBlock={1}
+            paddingInline={3}
+            borderRadius={4}
+          >
+            <span className="text-xl font-medium text-white">
+              فرم ثبت خروج مواد از انبار شارژ
+            </span>
+          </Stack>
+          <ShargeExitForm />
         </Stack>
       </CustomTabPanel>
     </Box>
