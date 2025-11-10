@@ -66,9 +66,9 @@ export default function ProductionPlanRowForm({
   };
 
   return (
-    <div className="w-full p-5 gap-2 flex justify-between items-center flex-wrap rounded-[4px] border-2 shadow border-[#0ead69] relative">
+    <div className="w-full p-5 gap-2 flex justify-between items-center flex-wrap rounded-[4px] border-2 shadow border-[#1e7677] relative">
       <div className="w-full flex justify-between items-center mb-4">
-        <div className="bg-[#0ead69] text-center px-3 py-2 rounded-lg">
+        <div className="bg-[#1e7677] text-center px-3 py-2 rounded-lg">
           <span className="text-lg font-normal text-white">
             جزئیات ردیف {index + 1}
           </span>
@@ -77,39 +77,39 @@ export default function ProductionPlanRowForm({
 
       <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+          <div className="flex items-center justify-start gap-2 border border-[#1e7677] rounded-lg py-2 px-3">
             <label className="min-w-[150px] font-medium">دسته‌بندی مواد:</label>
             <span className="text-lg font-normal">{planItem.dastemavadi}</span>
           </div>
 
-          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+          <div className="flex items-center justify-start gap-2 border border-[#1e7677] rounded-lg py-2 px-3">
             <label className="min-w-[150px] font-medium">نام مواد:</label>
             <span className="text-lg font-normal">{planItem.rizmavad}</span>
           </div>
 
-          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+          <div className="flex items-center justify-start gap-2 border border-[#1e7677] rounded-lg py-2 px-3">
             <label className="min-w-[150px] font-medium">تأمین‌کننده:</label>
             <span className="text-lg font-normal">{planItem.tamin}</span>
           </div>
 
-          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+          <div className="flex items-center justify-start gap-2 border border-[#1e7677] rounded-lg py-2 px-3">
             <label className="min-w-[150px] font-medium">دستگاه:</label>
             <span className="text-lg font-normal">{planItem.dastghah}</span>
           </div>
 
-          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+          <div className="flex items-center justify-start gap-2 border border-[#1e7677] rounded-lg py-2 px-3">
             <label className="min-w-[150px] font-medium">تاریخ درخواست:</label>
             <span className="text-lg font-normal">{planItem.time}</span>
           </div>
 
-          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+          <div className="flex items-center justify-start gap-2 border border-[#1e7677] rounded-lg py-2 px-3">
             <label className="min-w-[150px] font-medium">مرحله:</label>
             <span className="text-lg font-normal">{planItem.marhaleha}</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex items-center justify-start gap-2 border border-[#0ead69] rounded-lg py-2 px-3">
+          <div className="flex items-center justify-start gap-2 border border-[#1e7677] rounded-lg py-2 px-3">
             <label className="min-w-[150px] font-medium">
               موجودی(کیلوگرم):
             </label>
@@ -211,7 +211,7 @@ export default function ProductionPlanRowForm({
             className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
               loading
                 ? "bg-gray-400 text-white cursor-not-allowed"
-                : "bg-[#0ead69] hover:bg-green-800 text-white cursor-pointer"
+                : "bg-[#1e7677] hover:bg-[#165556] text-white cursor-pointer"
             }`}
           >
             {loading ? "در حال ارسال..." : `ثبت ردیف ${index + 1}`}

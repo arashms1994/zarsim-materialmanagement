@@ -48,7 +48,7 @@ export default function MaterialManagement() {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            bgcolor="#0ead69"
+            bgcolor="#1e7677"
             width="fit-content"
             paddingBlock={1}
             paddingInline={3}
@@ -73,7 +73,7 @@ export default function MaterialManagement() {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            bgcolor="#0ead69"
+            bgcolor="#1e7677"
             width="fit-content"
             paddingBlock={1}
             paddingInline={3}
@@ -98,7 +98,7 @@ export default function MaterialManagement() {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            bgcolor="#0ead69"
+            bgcolor="#1e7677"
             width="fit-content"
             paddingBlock={1}
             paddingInline={3}
@@ -123,7 +123,7 @@ export default function MaterialManagement() {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            bgcolor="#0ead69"
+            bgcolor="#1e7677"
             width="fit-content"
             paddingBlock={1}
             paddingInline={3}

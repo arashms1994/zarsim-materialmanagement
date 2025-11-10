@@ -8,10 +8,10 @@ const themeOptions: ThemeOptions = {
   palette: {
     mode: "light",
     primary: {
-      main: "#1976d2",
+      main: "#1e7677",
     },
     secondary: {
-      main: "#0d8957",
+      main: "#1e7677",
     },
   },
 };

@@ -266,7 +266,7 @@ export default function EnterForm() {
             <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
               {suppliersLoading ? (
                 <div className="px-3 py-2 text-sm text-gray-500 flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0ead69]"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#1e7677]"></div>
                   در حال بارگذاری...
                 </div>
               ) : supplierResults.length > 0 ? (
@@ -352,7 +352,7 @@ export default function EnterForm() {
         className={`cursor-pointer text-center rounded-lg px-6 py-2 mt-4 transition-all duration-300 select-none ${
           loading
             ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-[#0ead69] hover:bg-green-800 text-white"
+            : "bg-[#1e7677] hover:bg-[#175e5f] text-white"
         }`}
       >
         {loading ? "در حال ارسال..." : "ثبت اطلاعات"}

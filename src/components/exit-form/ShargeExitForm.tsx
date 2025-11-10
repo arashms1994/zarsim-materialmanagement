@@ -67,7 +67,7 @@ export default function ShargeExitForm() {
               <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
                 {searchLoading ? (
                   <div className="px-3 py-2 text-sm text-gray-500 flex items-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0ead69]"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#1e7677]"></div>
                     در حال جستجو...
                   </div>
                 ) : searchResults.length > 0 ? (
@@ -98,9 +98,9 @@ export default function ShargeExitForm() {
         <div className="space-y-4">
           {planLoading ? (
             <div className="flex items-center justify-center py-8">
-              <div className="flex items-center gap-3 bg-transparent border border-[#0ead69] rounded-lg px-6 py-4">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#0ead69]"></div>
-                <span className="text-[#0ead69] font-medium">
+              <div className="flex items-center gap-3 bg-transparent border border-[#1e7677] rounded-lg px-6 py-4">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#1e7677]"></div>
+                <span className="text-[#1e7677] font-medium">
                   در حال بارگذاری جزئیات برنامه {selectedPlan}
                 </span>
               </div>
