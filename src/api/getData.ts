@@ -61,7 +61,7 @@ export async function searchDarkhastMavadPlans(
   if (!term || term.trim().length < 2) return [];
 
   const encodedTerm = encodeURIComponent(term.trim());
-  const url = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items?$select=Id,shpmarebarname&$filter=substringof('${encodedTerm}',shpmarebarname)`;
+  const url = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items?$select=Id,shpmarebarname&$filter=startswith(shpmarebarname,'${encodedTerm}')&$orderby=shpmarebarname&$top=50`;
 
   const res = await fetch(url, {
     headers: {
@@ -90,6 +90,57 @@ export async function searchDarkhastMavadPlans(
     }, []);
 
   return uniques;
+}
+
+export async function getDarkhastMavadListByPlan(
+  planNumber: string
+): Promise<IDarkhastMavadListItem[]> {
+  const listGuid = config.LIST_GUIDS.DARKHAST_MAVAD;
+  if (!planNumber || planNumber.trim().length === 0) return [];
+
+  let items: IDarkhastMavadListItem[] = [];
+  const encodedPlanNumber = encodeURIComponent(planNumber.trim());
+
+  let nextUrl:
+    | string
+    | null = `${BASE_URL}/_api/web/lists(guid'${listGuid}')/items?$filter=shpmarebarname eq '${encodedPlanNumber}'&$orderby=ID desc`;
+
+  try {
+    while (nextUrl) {
+      const res = await fetch(nextUrl, {
+        headers: {
+          Accept: "application/json;odata=verbose",
+          "Content-Type": "application/json;odata=verbose",
+        },
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(
+          `خطا در گرفتن آیتم‌های برنامه ${planNumber}: ${err} (Status: ${res.status})`
+        );
+      }
+
+      const json: {
+        d: { results: IDarkhastMavadListItem[]; __next?: string };
+      } = await res.json();
+
+      const results = json.d?.results;
+      if (!Array.isArray(results)) {
+        throw new Error(
+          "ساختار داده‌ی برگشتی نامعتبر است: results یک آرایه نیست"
+        );
+      }
+
+      items = [...items, ...results];
+      nextUrl = json.d.__next ?? null;
+    }
+
+    return items;
+  } catch (err) {
+    console.error(`خطا در دریافت آیتم‌های برنامه ${planNumber}:`, err);
+    throw err;
+  }
 }
 
 export async function getSuppliers(): Promise<ISupplierItem[]> {
